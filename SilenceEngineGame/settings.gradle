@@ -1,0 +1,1 @@
+include 'MyGameCore', 'MyGameDesktop', 'MyGameHtml5'
