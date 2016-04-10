@@ -1,0 +1,79 @@
+.root {
+    -fx-background-color: linear-gradient(#200002, #4a0002);
+}
+
+.label {
+    -fx-text-fill: #ecffa9;
+}
+
+.button {
+    -fx-background-color: linear-gradient(#026300, #023a00);
+    -fx-text-fill: #ecffa9;
+}
+
+.button:pressed {
+    -fx-background-color: linear-gradient(#023a00, #026300);
+}
+
+#generate {
+    -fx-font-size: 15px;
+}
+
+#title {
+    -fx-font-size: 50px;
+    -fx-font-family: "Roboto";
+    -fx-font-weight: bold;
+    -fx-fill: #818181;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+}
+
+.text-field, #pDir {
+    -fx-background-color: linear-gradient(black, #200002);
+    -fx-text-fill: #ecffa9;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+}
+
+.context-menu {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+    -fx-min-width: 100px;
+    -fx-background-color: rgba(30, 0, 0, 0.95);
+}
+
+.error {
+    -fx-text-fill: #ff0000;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.success {
+    -fx-text-fill: #00ff00;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.progress {
+    -fx-text-fill: #ff6f00;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #200002;
+}
+
+.progress-bar > .bar {
+    -fx-accent: green;
+
+    -fx-background-color: linear-gradient(
+            from 0px .75em to .75em 0px,
+            repeat,
+            -fx-accent 0%,
+            -fx-accent 49%,
+            derive(-fx-accent, 30%) 50%,
+            derive(-fx-accent, 30%) 99%
+    );
+
+    -fx-box-border: goldenrod;
+    -fx-padding: 10px;
+}
