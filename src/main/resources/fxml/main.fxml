@@ -12,7 +12,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<GridPane alignment="center" hgap="10" prefHeight="500" prefWidth="400" vgap="15"
+<?import javafx.scene.control.CheckBox?>
+
+<GridPane alignment="center" hgap="10" prefWidth="400" vgap="15"
           xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.shc.sepcreator.MainController">
     <padding>
@@ -38,13 +40,25 @@
     <Button GridPane.halignment="RIGHT" text="..." GridPane.columnIndex="2" GridPane.rowIndex="5"
             onAction="#browseDirSelected"/>
 
-    <Button GridPane.halignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="7" text="Generate Project"
-            onAction="#generateProjectClicked" id="generate" fx:id="generateBtn"/>
-    <ProgressBar GridPane.halignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="8"
+    <HBox GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.columnSpan="3" GridPane.columnIndex="0"
+          alignment="CENTER" spacing="15" id="hbox">
+        <padding>
+            <Insets bottom="15" left="15" right="15" top="20"/>
+        </padding>
+
+        <CheckBox text="Core" selected="true" disable="true"/>
+        <CheckBox text="Desktop" selected="true" fx:id="desktopGen"/>
+        <CheckBox text="Html5" selected="true" fx:id="html5Gen"/>
+    </HBox>
+    <Label text="Select the required Modules" id="hbox-title" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.columnSpan="3" GridPane.columnIndex="0"/>
+
+    <Button GridPane.halignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="9" text="Generate Project"
+            onAction="#generateProjectClicked" id="generate" defaultButton="true" fx:id="generateBtn"/>
+    <ProgressBar GridPane.halignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="10"
                  prefWidth="Infinity" progress="0"
                  fx:id="progressBar"/>
     <Label text="" GridPane.halignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="3"
-           GridPane.rowIndex="9" styleClass="success" fx:id="messageStr"/>
+           GridPane.rowIndex="11" styleClass="success" fx:id="messageStr"/>
 
     <stylesheets>
         <URL value="@Application.css"/>

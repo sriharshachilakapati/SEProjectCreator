@@ -24,22 +24,12 @@
 
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
         "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to="mygame">
+<module>
 
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.gwt.xml.XML"/>
 
-    <inherits name="com.shc.SilenceEngine"/>
-    <inherits name="com.shc.webgl4j.client"/>
-    <inherits name='com.shc.silenceengine.backend.GwtBackend'/>
-
-    <inherits name="com.shc.MyGame"/>
-
-    <entry-point class='com.shc.mygame.html.MyGameLauncher'/>
-
-    <inherits name='com.google.gwt.user.theme.dark.Dark'/>
-
-    <source path='html'/>
+    <source path='${coreDirName}'/>
 
 </module>

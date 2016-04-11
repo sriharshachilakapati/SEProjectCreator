@@ -6,7 +6,7 @@ dependencies {
     compile files("../libs/silenceengine.jar")
     compile files("../libs/silenceengine-resources.jar")
     compile files("../libs/backend-lwjgl.jar")
-    compile project(":MyGameCore")
+    compile project(":${className}Core")
 
     compile "org.lwjgl:lwjgl:${lwjglVersion}"
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"

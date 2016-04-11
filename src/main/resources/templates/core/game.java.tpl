@@ -1,15 +1,15 @@
-package com.shc.mygame;
+package ${packageName};
 
 import com.shc.silenceengine.core.Game;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.input.Keyboard;
 
-public class MyGame extends Game
+public class ${className} extends Game
 {
     @Override
     public void init()
     {
-        SilenceEngine.display.setTitle("MyGame: SilenceEngine v1.0.1");
+        SilenceEngine.display.setTitle("${className}: SilenceEngine v1.0.1");
         SilenceEngine.display.setSize(1280, 720);
         SilenceEngine.display.centerOnScreen();
     }

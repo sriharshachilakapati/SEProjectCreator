@@ -21,9 +21,8 @@
 
 #title {
     -fx-font-size: 50px;
-    -fx-font-family: "Roboto";
     -fx-font-weight: bold;
-    -fx-fill: #818181;
+    -fx-fill: #cccccc;
     -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
 }
 
@@ -76,4 +75,27 @@
 
     -fx-box-border: goldenrod;
     -fx-padding: 10px;
+}
+
+#hbox {
+    -fx-background-color: rgba(100, 0, 0, 0.9);
+    -fx-background-radius: 5px;
+    -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
+}
+
+.check-box, .check-box:disabled {
+    -fx-text-fill: #ecffa9;
+    -fx-font-weight: bold;
+}
+
+#hbox-title {
+    -fx-translate-y: -25px;
+    /*-fx-font-weight: bold;*/
+
+    -fx-background-color: linear-gradient(black, #200002);;
+    -fx-text-fill: darkgray;
+    -fx-effect: innershadow(three-pass-box, rgba(100, 0, 0, 0.7), 6, 0.0, 0, 2);
+    -fx-background-radius: 10px;
+
+    -fx-padding: 3 10 3 10;
 }

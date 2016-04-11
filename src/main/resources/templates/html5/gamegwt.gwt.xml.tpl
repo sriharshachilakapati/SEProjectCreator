@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <!--
   ~ The MIT License (MIT)
   ~
@@ -23,9 +22,24 @@
   ~ SOFTWARE.
   -->
 
-<html lang='en'>
-    <head>
-        <title>MyGame</title>
-        <script type="text/javascript" language="javascript" src="mygame/mygame.nocache.js"></script>
-    </head>
-</html>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="${coreDirName}">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.xml.XML"/>
+
+    <inherits name="com.shc.SilenceEngine"/>
+    <inherits name="com.shc.webgl4j.client"/>
+    <inherits name='com.shc.silenceengine.backend.GwtBackend'/>
+
+    <inherits name="${coreModuleName}"/>
+
+    <entry-point class='${packageName}.html.${className}Launcher'/>
+
+    <inherits name='com.google.gwt.user.theme.dark.Dark'/>
+
+    <source path='html'/>
+
+</module>

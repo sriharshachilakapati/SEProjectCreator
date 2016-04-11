@@ -9,10 +9,10 @@ gwt {
     maxHeapSize = "1024M";
 
     gwtVersion = '2.8.0-beta1'
-    modules 'com.shc.mygame.MyGameGwt'
-    devModules 'com.shc.mygame.MyGameGwt'
+    modules '${packageName}.${className}Gwt'
+    devModules '${packageName}.${className}Gwt'
 
-    src += files(project(':MyGameCore').sourceSets.main.allJava.srcDirs)
+    src += files(project(':${className}Core').sourceSets.main.allJava.srcDirs)
 }
 
 javadoc {
@@ -35,7 +35,7 @@ task superDev(type: GwtSuperDev) {
 war {
     from sourceSets.main.resources
     from zipTree(file("../libs/silenceengine-resources.jar"))
-    from project(':MyGameCore').sourceSets.main.resources
+    from project(':${className}Core').sourceSets.main.resources
 
     rootSpec.exclude("**/*.class")
     rootSpec.exclude("WEB-INF")
@@ -45,7 +45,7 @@ dependencies {
     providedCompile files("../libs/silenceengine.jar")
     providedCompile files("../libs/silenceengine-sources.jar")
     providedCompile files("../libs/backend-gwt.jar")
-    providedCompile project(":MyGameCore")
+    providedCompile project(':${className}Core')
 
     providedCompile 'com.goharsha:webgl4j:0.2.9-SNAPSHOT'
     providedCompile 'com.goharsha:gwt-al:0.1-SNAPSHOT'
