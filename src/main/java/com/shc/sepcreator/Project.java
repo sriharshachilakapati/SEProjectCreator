@@ -94,6 +94,12 @@ public class Project
             return;
         }
 
+        if (className.trim().equalsIgnoreCase("Game") || className.trim().equalsIgnoreCase("SilenceEngine"))
+        {
+            reportError("Class name conflicts with SilenceEngine's Game class");
+            return;
+        }
+
         setTemplateVariable("className", className);
         setTemplateVariable("packageName", packageName);
         setTemplateVariable("coreDirName", packageName.contains(".") ?
@@ -108,25 +114,34 @@ public class Project
                                               ? renderTemplate("${corePackageName}.${className}")
                                               : renderTemplate("${className}"));
 
-        // Add libraries
-        addFile("/libs/backend-gwt.jar", "libs/backend-gwt.jar");
-        addFile("/libs/backend-gwt-javadoc.jar", "libs/backend-gwt-javadoc.jar");
-        addFile("/libs/backend-lwjgl.jar", "libs/backend-lwjgl.jar");
-        addFile("/libs/backend-lwjgl-javadoc.jar", "libs/backend-lwjgl-javadoc.jar");
+        // Add libraries to be extracted into the project directory
+        if (generateHtml5Project)
+        {
+            addFile("/libs/backend-gwt.jar", "libs/backend-gwt.jar");
+            addFile("/libs/backend-gwt-javadoc.jar", "libs/backend-gwt-javadoc.jar");
+            addFile("/libs/silenceengine-sources.jar", "libs/silenceengine-sources.jar");
+        }
+
+        if (generateDesktopProject)
+        {
+            addFile("/libs/backend-lwjgl.jar", "libs/backend-lwjgl.jar");
+            addFile("/libs/backend-lwjgl-javadoc.jar", "libs/backend-lwjgl-javadoc.jar");
+        }
+
         addFile("/libs/silenceengine.jar", "libs/silenceengine.jar");
         addFile("/libs/silenceengine-javadoc.jar", "libs/silenceengine-javadoc.jar");
         addFile("/libs/silenceengine-resources.jar", "libs/silenceengine-resources.jar");
-        addFile("/libs/silenceengine-sources.jar", "libs/silenceengine-sources.jar");
 
         // Add template files for root project
-        addFile("/settings.gradle", "settings.gradle.tpl");
         addFile("/build.gradle", "build.gradle.tpl");
 
         // Add template files for core project
         addFile("/${className}Core/build.gradle", "core/build.gradle.tpl");
-        addFile("/${className}Core/src/main/java/${packageDir}/../${className}.gwt.xml", "core/project.gwt.xml.tpl");
         addFile("/${className}Core/src/main/java/${packageDir}/${className}.java", "core/game.java.tpl");
         addFile("/${className}Core/src/main/resources/README.txt", "core/resources.txt.tpl");
+
+        if (generateHtml5Project)
+            addFile("/${className}Core/src/main/java/${packageDir}/../${className}.gwt.xml", "core/project.gwt.xml.tpl");
 
         if (generateDesktopProject)
         {
@@ -144,7 +159,7 @@ public class Project
             addFile("/${className}Html5/src/main/webapp/index.html", "html5/index.html.tpl");
         }
 
-        float maxFiles = files.size();
+        float maxFiles = files.size() + 1;
         float done = 0;
 
         try
@@ -183,6 +198,26 @@ public class Project
                 done++;
                 updateProgress((int) (done / maxFiles * 100.0));
             }
+
+            // Write the settings.gradle file linking all these modules
+            String settingsFile = "include '${className}Core'";
+
+            if (generateDesktopProject)
+                settingsFile += ", '${className}Desktop'";
+
+            if (generateHtml5Project)
+                settingsFile += ", '${className}Html5'";
+
+            settingsFile = renderTemplate(settingsFile);
+
+            FileWriter writer = new FileWriter(new File(projectDirectory, "settings.gradle"));
+            writer.write(settingsFile);
+            writer.write("\n");
+            writer.flush();
+            writer.close();
+
+            done++;
+            updateProgress((int) (done / maxFiles * 100.0));
         }
         catch (Exception e)
         {

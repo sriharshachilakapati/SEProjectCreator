@@ -2,6 +2,7 @@ package com.shc.sepcreator;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -10,11 +11,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * @author Sri Harsha Chilakapati
  */
-public class MainController
+public class MainController implements Initializable
 {
     @FXML
     public TextField   pkgName;
@@ -66,6 +69,9 @@ public class MainController
             messageStr.setText("Error generating project: " + reason);
             messageStr.getStyleClass().clear();
             messageStr.getStyleClass().add("error");
+
+            progressBar.progressProperty().unbind();
+            progressBar.progressProperty().setValue(0);
         };
 
         task.workDoneProperty().addListener((observable, oldValue, newValue) ->
@@ -96,6 +102,16 @@ public class MainController
         DirectoryChooser chooser = new DirectoryChooser();
         File dir = chooser.showDialog(null);
 
-        pDir.setText(dir.getAbsolutePath());
+        if (dir != null)
+            pDir.setText(dir.getAbsolutePath());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        pkgName.setText("com.me.mygame");
+        clsName.setText("MyGame");
+
+        pDir.setText(new File(System.getProperty("user.home") + "/MyGame/").getAbsolutePath());
     }
 }

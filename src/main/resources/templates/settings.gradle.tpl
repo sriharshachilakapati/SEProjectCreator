@@ -1,1 +1,0 @@
-include '${className}Core', '${className}Desktop', '${className}Html5'

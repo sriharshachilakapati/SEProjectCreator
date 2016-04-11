@@ -78,8 +78,9 @@
 }
 
 #hbox {
-    -fx-background-color: rgba(100, 0, 0, 0.9);
+    /*-fx-background-color: rgba(100, 0, 0, 0.9);*/
     -fx-background-radius: 5px;
+    -fx-background-color: linear-gradient(black, #200002);
     -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.7), 6, 0.0, 0, 2);
 }
 
@@ -89,12 +90,11 @@
 }
 
 #hbox-title {
-    -fx-translate-y: -25px;
-    /*-fx-font-weight: bold;*/
+    -fx-translate-y: -30px;
 
-    -fx-background-color: linear-gradient(black, #200002);;
+    -fx-background-color: linear-gradient(black, #200002);
     -fx-text-fill: darkgray;
-    -fx-effect: innershadow(three-pass-box, rgba(100, 0, 0, 0.7), 6, 0.0, 0, 2);
+    -fx-effect: innershadow(three-pass-box, rgba(200, 200, 200, 0.3), 2, 0.0, 0, 2);
     -fx-background-radius: 10px;
 
     -fx-padding: 3 10 3 10;
