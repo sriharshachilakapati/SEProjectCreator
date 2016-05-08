@@ -49,6 +49,7 @@ dependencies {
 
     providedCompile 'com.goharsha:webgl4j:0.2.9-SNAPSHOT'
     providedCompile 'com.goharsha:gwt-al:0.1-SNAPSHOT'
+    providedCompile 'com.goharsha:gwt-opentype:0.1-SNAPSHOT'
     providedCompile 'com.google.gwt:gwt-user:2.8.0-beta1'
     providedCompile 'com.google.gwt:gwt-servlet:2.8.0-beta1'
 }

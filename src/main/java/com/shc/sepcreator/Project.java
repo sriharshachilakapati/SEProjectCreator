@@ -157,6 +157,7 @@ public class Project
             addFile("/${className}Html5/src/main/java/${packageDir}/${className}Gwt.gwt.xml", "html5/gamegwt.gwt.xml.tpl");
             addFile("/${className}Html5/src/main/java/${packageDir}/html/${className}Launcher.java", "html5/launcher.java.tpl");
             addFile("/${className}Html5/src/main/webapp/index.html", "html5/index.html.tpl");
+            addFile("/${className}Html5/src/main/java/${packageDir}/public/background.css", "html5/background.css.tpl");
         }
 
         float maxFiles = files.size() + 1;

@@ -32,6 +32,8 @@
 
     <inherits name="com.shc.SilenceEngine"/>
     <inherits name="com.shc.webgl4j.client"/>
+    <inherits name="com.shc.gwtal.client"/>
+    <inherits name="com.shc.GwtOpenType"/>
     <inherits name='com.shc.silenceengine.backend.GwtBackend'/>
 
     <inherits name="${coreModuleName}"/>
@@ -41,5 +43,6 @@
     <inherits name='com.google.gwt.user.theme.dark.Dark'/>
 
     <source path='html'/>
+    <stylesheet src="background.css"/>
 
 </module>
