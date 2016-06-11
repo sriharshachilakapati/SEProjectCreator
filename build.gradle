@@ -5,7 +5,29 @@ apply plugin: 'eclipse'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.apache.velocity:velocity:1.7'
+}
+
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
+    from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
     manifest {
         attributes 'Main-Class': 'com.shc.sepcreator.Main'
     }

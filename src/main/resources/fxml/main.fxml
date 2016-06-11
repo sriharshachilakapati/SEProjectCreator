@@ -132,6 +132,12 @@
                 selected = "true"
                 fx:id    = "html5Gen"
         />
+
+        <CheckBox
+                text     = "Android"
+                selected = "true"
+                fx:id    = "androidGen"
+        />
     </HBox>
 
     <Label

@@ -1,0 +1,37 @@
+apply plugin: 'java'
+
+evaluationDependsOn(':${className}Core')
+
+project.ext.lwjglVersion = "3.0.1-SNAPSHOT"
+
+dependencies {
+    compile files("../libs/silenceengine.jar")
+    compile files("../libs/silenceengine-resources.jar")
+    compile files("../libs/backend-lwjgl.jar")
+    compile project(":${className}Core")
+
+    compile "org.lwjgl:lwjgl:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
+    from(configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+
+    manifest {
+        attributes 'Main-Class': '${packageName}.desktop.${className}Launcher'
+    }
+}

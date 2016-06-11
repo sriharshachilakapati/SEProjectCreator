@@ -1,0 +1,81 @@
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.android.application'
+
+evaluationDependsOn(':${className}Core')
+
+dependencies {
+    provided files("../libs/silenceengine.jar")
+    provided project(":${className}Core")
+
+    debugCompile (name:'backend-android-debug', ext:'aar')
+    releaseCompile (name:'backend-android-release', ext:'aar')
+
+    compile 'com.annimon:stream:1.0.3'
+    compile 'com.goharsha:android-openal:0.1-SNAPSHOT'
+}
+
+repositories {
+    mavenCentral()
+    flatDir{
+        dirs '../libs'
+    }
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    sourceSets.main.assets.srcDirs = [
+            file(project(':${className}Core').sourceSets.main.output.resourcesDir),
+            'build/generated/assets/'
+    ]
+}
+
+task beforeRetrolambda << {
+    copy {
+        configurations.provided.asFileTree.each {
+            from(zipTree(it))
+        }
+        into 'build/retrolambda/debug/'
+        include '**/*.class'
+    }
+
+    copy {
+        configurations.provided.asFileTree.each {
+            from(zipTree(it))
+        }
+        into 'build/retrolambda/release/'
+        include '**/*.class'
+    }
+}
+
+preBuild << {
+    copy {
+        exclude 'META-INF/MANIFEST.MF'
+        from zipTree(file("../libs/silenceengine-resources.jar"))
+        into 'build/generated/assets/'
+    }
+}
+
+afterEvaluate {
+    compileRetrolambdaDebug.dependsOn beforeRetrolambda
+    compileRetrolambdaRelease.dependsOn beforeRetrolambda
+}
+
+retrolambda {
+    defaultMethods true
+}

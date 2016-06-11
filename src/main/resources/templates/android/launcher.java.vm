@@ -1,0 +1,17 @@
+package ${packageName}.android;
+
+import ${packageName}.${className};
+import com.shc.silenceengine.backend.android.AndroidRuntime;
+import com.shc.silenceengine.backend.android.AndroidLauncher;
+
+/**
+ * @author Sri Harsha Chilakapati
+ */
+public class ${className}Launcher extends AndroidLauncher
+{
+    @Override
+    public void launchGame()
+    {
+        AndroidRuntime.start(new ${className}());
+    }
+}

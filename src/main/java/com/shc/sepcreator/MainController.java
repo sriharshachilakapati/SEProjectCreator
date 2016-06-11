@@ -19,22 +19,17 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable
 {
-    @FXML
-    public TextField   pkgName;
-    @FXML
-    public TextField   clsName;
-    @FXML
-    public TextField   pDir;
-    @FXML
-    public Label       messageStr;
-    @FXML
-    public ProgressBar progressBar;
-    @FXML
-    public Button      generateBtn;
-    @FXML
-    public CheckBox    desktopGen;
-    @FXML
-    public CheckBox    html5Gen;
+    @FXML public TextField pkgName;
+    @FXML public TextField clsName;
+    @FXML public TextField pDir;
+
+    @FXML public Label       messageStr;
+    @FXML public ProgressBar progressBar;
+    @FXML public Button      generateBtn;
+
+    @FXML public CheckBox desktopGen;
+    @FXML public CheckBox html5Gen;
+    @FXML public CheckBox androidGen;
 
     @FXML
     public void generateProjectClicked()
@@ -47,6 +42,7 @@ public class MainController implements Initializable
 
         project.generateHtml5Project = html5Gen.isSelected();
         project.generateDesktopProject = desktopGen.isSelected();
+        project.generateAndroidProject = androidGen.isSelected();
 
         Task<Void> task = new Task<Void>()
         {

@@ -1,6 +1,8 @@
 package com.shc.sepcreator;
 
 import javafx.application.Platform;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -21,16 +23,17 @@ import java.util.regex.Pattern;
  */
 public class Project
 {
-    public File projectDirectory;
+    File projectDirectory;
 
-    public String packageName;
-    public String className;
+    String packageName;
+    String className;
 
-    public IProgressCallback progressCallback;
-    public IErrorCallback    errorCallback;
+    IProgressCallback progressCallback;
+    IErrorCallback    errorCallback;
 
-    public boolean generateDesktopProject;
-    public boolean generateHtml5Project;
+    boolean generateDesktopProject;
+    boolean generateHtml5Project;
+    boolean generateAndroidProject;
 
     private Map<String, String> templateParameters;
     private Map<String, String> files;
@@ -41,12 +44,12 @@ public class Project
         files = new HashMap<>();
     }
 
-    public void setTemplateVariable(String variable, String value)
+    private void setTemplateVariable(String variable, String value)
     {
         templateParameters.put(String.format("${%s}", variable), value);
     }
 
-    public void addFile(String targetDestination, String templateName)
+    private void addFile(String targetDestination, String templateName)
     {
         files.put(targetDestination, "/templates/" + templateName);
     }
@@ -80,7 +83,7 @@ public class Project
         return templateString;
     }
 
-    public void generate()
+    void generate()
     {
         if (className.isEmpty())
         {
@@ -99,6 +102,13 @@ public class Project
             reportError("Class name conflicts with SilenceEngine's Game class");
             return;
         }
+
+        VelocityEngine ve = new VelocityEngine();
+        VelocityContext ctx = new VelocityContext();
+
+        ctx.put("generateAndroid", generateAndroidProject);
+        ctx.put("generateDesktop", generateDesktopProject);
+        ctx.put("generateHtml5", generateHtml5Project);
 
         setTemplateVariable("className", className);
         setTemplateVariable("packageName", packageName);
@@ -128,36 +138,52 @@ public class Project
             addFile("/libs/backend-lwjgl-javadoc.jar", "libs/backend-lwjgl-javadoc.jar");
         }
 
+        if (generateAndroidProject)
+        {
+            addFile("/libs/backend-android-release.aar", "libs/backend-android-release.aar");
+            addFile("/libs/backend-android-debug.aar", "libs/backend-android-debug.aar");
+        }
+
+
         addFile("/libs/silenceengine.jar", "libs/silenceengine.jar");
         addFile("/libs/silenceengine-javadoc.jar", "libs/silenceengine-javadoc.jar");
         addFile("/libs/silenceengine-resources.jar", "libs/silenceengine-resources.jar");
 
         // Add template files for root project
-        addFile("/build.gradle", "build.gradle.tpl");
+        addFile("/build.gradle", "build.gradle.vm");
 
         // Add template files for core project
-        addFile("/${className}Core/build.gradle", "core/build.gradle.tpl");
-        addFile("/${className}Core/src/main/java/${packageDir}/${className}.java", "core/game.java.tpl");
-        addFile("/${className}Core/src/main/resources/README.txt", "core/resources.txt.tpl");
+        addFile("/${className}Core/build.gradle", "core/build.gradle.vm");
+        addFile("/${className}Core/src/main/java/${packageDir}/${className}.java", "core/game.java.vm");
+        addFile("/${className}Core/src/main/resources/README.txt", "core/resources.txt.vm");
 
         if (generateHtml5Project)
-            addFile("/${className}Core/src/main/java/${packageDir}/../${className}.gwt.xml", "core/project.gwt.xml.tpl");
+            addFile("/${className}Core/src/main/java/${packageDir}/../${className}.gwt.xml", "core/project.gwt.xml.vm");
 
         if (generateDesktopProject)
         {
             // Add template files for desktop project
-            addFile("/${className}Desktop/build.gradle", "desktop/build.gradle.tpl");
-            addFile("/${className}Desktop/src/main/java/${packageDir}/desktop/${className}Launcher.java", "desktop/launcher.java.tpl");
+            addFile("/${className}Desktop/build.gradle", "desktop/build.gradle.vm");
+            addFile("/${className}Desktop/src/main/java/${packageDir}/desktop/${className}Launcher.java", "desktop/launcher.java.vm");
         }
 
         if (generateHtml5Project)
         {
             // Add template files for html5 project
-            addFile("/${className}Html5/build.gradle", "html5/build.gradle.tpl");
-            addFile("/${className}Html5/src/main/java/${packageDir}/${className}Gwt.gwt.xml", "html5/gamegwt.gwt.xml.tpl");
-            addFile("/${className}Html5/src/main/java/${packageDir}/html/${className}Launcher.java", "html5/launcher.java.tpl");
-            addFile("/${className}Html5/src/main/webapp/index.html", "html5/index.html.tpl");
-            addFile("/${className}Html5/src/main/java/${packageDir}/public/background.css", "html5/background.css.tpl");
+            addFile("/${className}Html5/build.gradle", "html5/build.gradle.vm");
+            addFile("/${className}Html5/src/main/java/${packageDir}/${className}Gwt.gwt.xml", "html5/gamegwt.gwt.xml.vm");
+            addFile("/${className}Html5/src/main/java/${packageDir}/html/${className}Launcher.java", "html5/launcher.java.vm");
+            addFile("/${className}Html5/src/main/webapp/index.html", "html5/index.html.vm");
+            addFile("/${className}Html5/src/main/java/${packageDir}/public/background.css", "html5/background.css.vm");
+        }
+
+        if (generateAndroidProject)
+        {
+            // Add template files for android project
+            addFile("/${className}Android/build.gradle", "android/build.gradle.vm");
+            addFile("/${className}Android/src/main/AndroidManifest.xml", "android/manifest.xml.vm");
+            addFile("/${className}Android/src/main/java/${packageDir}/android/${className}Launcher.java", "android/launcher.java.vm");
+            addFile("/${className}Android/src/main/res/drawable/ic_launcher.png", "android/ic_launcher.png");
         }
 
         float maxFiles = files.size() + 1;
@@ -174,7 +200,7 @@ public class Project
 
                 String sourceFileName = files.get(fileName);
 
-                if (sourceFileName.endsWith(".tpl"))
+                if (sourceFileName.endsWith(".vm"))
                 {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(sourceFileName)));
 
@@ -189,7 +215,8 @@ public class Project
                     templateData = renderTemplate(templateData);
 
                     FileWriter writer = new FileWriter(dest);
-                    writer.write(templateData);
+                    ve.evaluate(ctx, writer, sourceFileName, templateData);
+
                     writer.flush();
                     writer.close();
                 }
@@ -202,6 +229,9 @@ public class Project
 
             // Write the settings.gradle file linking all these modules
             String settingsFile = "include '${className}Core'";
+
+            if (generateAndroidProject)
+                settingsFile += ", '${className}Android'";
 
             if (generateDesktopProject)
                 settingsFile += ", '${className}Desktop'";
@@ -263,13 +293,13 @@ public class Project
     }
 
     @FunctionalInterface
-    public interface IProgressCallback
+    interface IProgressCallback
     {
         void update(int progress);
     }
 
     @FunctionalInterface
-    public interface IErrorCallback
+    interface IErrorCallback
     {
         void handle(String reason);
     }

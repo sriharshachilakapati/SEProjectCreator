@@ -1,0 +1,42 @@
+#* @vtlvariable name="generateHtml5" type="boolean" *#
+#* @vtlvariable name="generateAndroid" type="boolean" *#
+
+#if (${generateHtml5} || ${generateAndroid})
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        #if (${generateHtml5})
+            classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+        #end
+
+        #if (${generateAndroid})
+            classpath 'com.android.tools.build:gradle:2.1.2'
+            classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+            classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        #end
+    }
+
+    #if (${generateAndroid})
+        configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+    #end
+}
+#end
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+}
+
+subprojects {
+    apply plugin: 'maven'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
