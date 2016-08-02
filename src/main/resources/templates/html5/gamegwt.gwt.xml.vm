@@ -36,6 +36,9 @@
     <inherits name="com.shc.GwtOpenType"/>
     <inherits name='com.shc.silenceengine.backend.GwtBackend'/>
 
+    <inherits name="com.shc.EasyXML"/>
+    <inherits name="com.shc.EasyJSON"/>
+
     <inherits name="${coreModuleName}"/>
 
     <entry-point class='${packageName}.html.${className}Launcher'/>

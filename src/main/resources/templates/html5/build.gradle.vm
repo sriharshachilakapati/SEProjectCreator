@@ -54,4 +54,7 @@ dependencies {
     providedCompile 'com.goharsha:gwt-opentype:0.1-SNAPSHOT'
     providedCompile 'com.google.gwt:gwt-user:2.8.0-beta1'
     providedCompile 'com.google.gwt:gwt-servlet:2.8.0-beta1'
+
+    providedCompile 'com.goharsha:easyxml:0.1:gwt'
+    providedCompile 'com.goharsha:easyjson:0.3:gwt'
 }

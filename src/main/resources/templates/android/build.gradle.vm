@@ -12,6 +12,11 @@ dependencies {
 
     compile 'com.annimon:stream:1.0.3'
     compile 'com.goharsha:android-openal:0.1-SNAPSHOT'
+
+    provided 'com.goharsha:easyxml:0.1:@jar'
+    provided 'com.goharsha:easyjson:0.3:@jar'
+
+    retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:2.3.0"
 }
 
 repositories {

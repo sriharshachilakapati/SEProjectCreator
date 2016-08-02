@@ -14,6 +14,9 @@ dependencies {
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+
+    compile 'com.goharsha:easyxml:0.1:@jar'
+    compile 'com.goharsha:easyjson:0.3:@jar'
 }
 
 jar {

@@ -10,18 +10,18 @@ buildscript {
 
     dependencies {
         #if (${generateHtml5})
-            classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         #end
 
         #if (${generateAndroid})
-            classpath 'com.android.tools.build:gradle:2.1.2'
-            classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-            classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         #end
     }
 
     #if (${generateAndroid})
-        configurations.classpath.exclude group: 'com.android.tools.external.lombok'
+    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
     #end
 }
 #end
