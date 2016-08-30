@@ -9,7 +9,7 @@ public class ${className} extends Game
     @Override
     public void init()
     {
-        SilenceEngine.display.setTitle("${className}: SilenceEngine v1.0.1");
+        SilenceEngine.display.setTitle("${className}: SilenceEngine v1.0.10");
         SilenceEngine.display.setSize(1280, 720);
         SilenceEngine.display.centerOnScreen();
     }
