@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 evaluationDependsOn(':${className}Core')
 
-project.ext.lwjglVersion = "3.0.1-SNAPSHOT"
+project.ext.lwjglVersion = "3.1.1-SNAPSHOT"
 
 dependencies {
     compile files("../libs/silenceengine.jar")
@@ -32,6 +32,9 @@ dependencies {
     compile "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-windows"
     compile "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-macos"
     compile "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-linux"
+    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}:natives-windows"
+    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}:natives-macos"
+    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}:natives-linux"
 
     compile 'com.goharsha:easyxml:0.1:@jar'
     compile 'com.goharsha:easyjson:0.3:@jar'
