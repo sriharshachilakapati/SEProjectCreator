@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 evaluationDependsOn(':${className}Core')
 
-project.ext.lwjglVersion = "3.1.1-SNAPSHOT"
+project.ext.lwjglVersion = "3.1.2-SNAPSHOT"
 
 dependencies {
     compile files("../libs/silenceengine.jar")
