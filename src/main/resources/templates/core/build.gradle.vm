@@ -1,9 +1,8 @@
-apply plugin: 'java'
+sourceSets.main.resources {
+    exclude "*.*"
+    exclude "**/"
+}
 
-dependencies {
-    compile files("../libs/silenceengine.jar")
-    compile files("../libs/silenceengine-resources.jar")
-
-    compile 'com.goharsha:easyxml:0.1:@jar'
-    compile 'com.goharsha:easyjson:0.3:@jar'
+javadoc {
+    options.addStringOption("sourcepath", "")
 }

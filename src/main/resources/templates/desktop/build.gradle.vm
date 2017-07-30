@@ -1,43 +1,13 @@
-apply plugin: 'java'
+javadoc {
+    options.addStringOption("sourcepath", "")
+}
 
-evaluationDependsOn(':${className}Core')
-
-project.ext.lwjglVersion = "3.1.2-SNAPSHOT"
+sourceSets.main.resources {
+	srcDirs += project(":${className}Core").sourceSets.main.resources.srcDirs
+}
 
 dependencies {
-    compile files("../libs/silenceengine.jar")
     compile files("../libs/silenceengine-resources.jar")
-    compile files("../libs/backend-lwjgl.jar")
-    compile project(":${className}Core")
-
-    compile "org.lwjgl:lwjgl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
-
-    compile "org.lwjgl:lwjgl:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl:${lwjglVersion}:natives-macos"
-    compile "org.lwjgl:lwjgl:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}:natives-macos"
-    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}:natives-macos"
-    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:natives-macos"
-    compile "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-macos"
-    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}:natives-macos"
-    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}:natives-linux"
-
-    compile 'com.goharsha:easyxml:0.1:@jar'
-    compile 'com.goharsha:easyjson:0.3:@jar'
 }
 
 jar {

@@ -1,38 +1,15 @@
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.android.application'
-
-evaluationDependsOn(':${className}Core')
-
-dependencies {
-    provided files("../libs/silenceengine.jar")
-    provided project(":${className}Core")
-
-    debugCompile (name:'backend-android-debug', ext:'aar')
-    releaseCompile (name:'backend-android-release', ext:'aar')
-
-    compile 'com.annimon:stream:1.0.3'
-    compile 'com.goharsha:android-openal:0.1-SNAPSHOT'
-
-    provided 'com.goharsha:easyxml:0.1:@jar'
-    provided 'com.goharsha:easyjson:0.3:@jar'
-
-    retrolambdaConfig "net.orfjackal.retrolambda:retrolambda:2.3.0"
-}
-
-repositories {
-    mavenCentral()
-    flatDir{
-        dirs '../libs'
-    }
-}
-
 android {
-    compileSdkVersion 22
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 26
+    buildToolsVersion '25.0.3'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -45,12 +22,12 @@ android {
     }
 
     sourceSets.main.assets.srcDirs = [
-            file(project(':${className}Core').sourceSets.main.output.resourcesDir),
+            files(project(':${className}Core').sourceSets.main.resources.srcDirs),
             'build/generated/assets/'
     ]
 }
 
-task beforeRetrolambda << {
+task beforeRetrolambda {
     copy {
         configurations.provided.asFileTree.each {
             from(zipTree(it))
@@ -68,7 +45,7 @@ task beforeRetrolambda << {
     }
 }
 
-preBuild << {
+preBuild.doLast {
     copy {
         exclude 'META-INF/MANIFEST.MF'
         from zipTree(file("../libs/silenceengine-resources.jar"))

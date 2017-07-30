@@ -59,18 +59,19 @@ public class Project
         templateFile = renderTemplate(templateFile.replaceAll("\\\\", "/"));
 
         String[] paths = templateFile.split("/");
-        templateFile = "";
 
+        StringBuilder templateFileBuilder = new StringBuilder();
         for (String path : paths)
         {
             if (path.isEmpty())
                 continue;
 
             if (path.equals(".."))
-                templateFile = templateFile.substring(0, templateFile.lastIndexOf('/'));
+                templateFileBuilder = new StringBuilder(templateFileBuilder.substring(0, templateFileBuilder.lastIndexOf("/")));
             else
-                templateFile += "/" + path;
+                templateFileBuilder.append("/").append(path);
         }
+        templateFile = templateFileBuilder.toString();
 
         return templateFile;
     }
@@ -144,7 +145,6 @@ public class Project
             addFile("/libs/backend-android-debug.aar", "libs/backend-android-debug.aar");
         }
 
-
         addFile("/libs/silenceengine.jar", "libs/silenceengine.jar");
         addFile("/libs/silenceengine-javadoc.jar", "libs/silenceengine-javadoc.jar");
         addFile("/libs/silenceengine-resources.jar", "libs/silenceengine-resources.jar");
@@ -186,6 +186,15 @@ public class Project
             addFile("/${className}Android/src/main/res/drawable/ic_launcher.png", "android/ic_launcher.png");
         }
 
+        // Add the .gitignore file for repositories
+        addFile("/.gitignore", ".gitignore.vm");
+
+        // Add the gradle wrapper
+        addFile("/gradlew", "gradlew");
+        addFile("/gradlew.bat", "gradlew.bat");
+        addFile("/gradle/wrapper/gradle-wrapper.jar", "gradle/wrapper/gradle-wrapper.jar");
+        addFile("/gradle/wrapper/gradle-wrapper.properties", "gradle/wrapper/gradle-wrapper.properties");
+
         float maxFiles = files.size() + 1;
         float done = 0;
 
@@ -204,18 +213,18 @@ public class Project
                 {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(sourceFileName)));
 
-                    String templateData = reader.readLine();
+                    StringBuilder templateData = new StringBuilder(reader.readLine());
                     String line;
 
                     while ((line = reader.readLine()) != null)
-                        templateData += "\n" + line;
+                        templateData.append("\n").append(line);
 
                     reader.close();
 
-                    templateData = renderTemplate(templateData);
+                    templateData = new StringBuilder(renderTemplate(templateData.toString()));
 
                     FileWriter writer = new FileWriter(dest);
-                    ve.evaluate(ctx, writer, sourceFileName, templateData);
+                    ve.evaluate(ctx, writer, sourceFileName, templateData.toString());
 
                     writer.flush();
                     writer.close();
